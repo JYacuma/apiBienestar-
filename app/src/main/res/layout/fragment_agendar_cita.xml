@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="32dp"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Agendar Nueva Cita"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#1565C0"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profesional:"
+        android:textStyle="bold"/>
+
+    <Spinner
+        android:id="@+id/spinnerProfesionales"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha (YYYY-MM-DD):"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/etFechaCita"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ej: 2026-06-15"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnConfirmarCita"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Confirmar Cita"
+        android:backgroundTint="#2E7D32"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"/>
+</LinearLayout>

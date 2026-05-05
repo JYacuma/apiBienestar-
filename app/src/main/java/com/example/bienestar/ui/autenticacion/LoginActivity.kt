@@ -50,16 +50,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener {
-
             // ==========================================
             // MODO DESARROLLO (BYPASS DEL LOGIN)
             // ==========================================
-            // Entramos directo como ADMINISTRADOR para probar sus pantallas
-            sessionManager.guardarSesion(3L, "Jefe de Bienestar", "ADMINISTRADOR")
+            // Entramos como PROFESIONAL para probar el clic en la agenda
+            sessionManager.guardarSesion(2L, "Profesional de Prueba", "PROFESIONAL")
 
-            Toast.makeText(this, "Modo Prueba: Entrando como Administrador...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Modo Prueba: Entrando como Profesional...", Toast.LENGTH_SHORT).show()
 
-            startActivity(Intent(this, AdminMainActivity::class.java))
+            startActivity(Intent(this, ProfesionalMainActivity::class.java))
             finish()
 
             // ==========================================
