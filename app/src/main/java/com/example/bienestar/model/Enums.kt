@@ -6,11 +6,13 @@ enum class Rol {
     ADMINISTRADOR
 }
 
+
+
 enum class EstadoCita {
     PENDIENTE,
-    ASISTIO,
-    NO_ASISTIO,
-    CANCELADA
+    CONFIRMADA,
+    CANCELADA,
+    COMPLETADA
 }
 
 enum class EstadoSolicitud {

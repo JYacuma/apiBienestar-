@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="32dp"
-    android:gravity="center"
-    android:background="#FFFFFF">
+    android:background="#F5F5F5">
 
-    <TextView
-        android:id="@+id/tvBienvenidaProfesional"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dashboard Profesional"
-        android:textSize="24sp"
-        android:textColor="#2E7D32"
-        android:textStyle="bold"
-        android:layout_marginBottom="30dp"/>
-
-    <Button
-        android:id="@+id/btnCerrarSesionProfesional"
+    <FrameLayout
+        android:id="@+id/fragment_container_prof"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Cerrar Sesión"
-        android:backgroundTint="#E53935"
-        android:textColor="#FFFFFF"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_navigation_prof" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_prof"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        app:menu="@menu/menu_profesional"
+        app:itemIconTint="#F57C00"
+        app:itemTextColor="#F57C00" />
+</RelativeLayout>

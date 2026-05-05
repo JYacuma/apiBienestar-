@@ -1,34 +1,42 @@
 package com.example.bienestar.ui.profesional
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.bienestar.R
-import com.example.bienestar.ui.autenticacion.LoginActivity
-import com.example.bienestar.utils.SessionManager
-import com.example.bienestar.viewmodel.ProfesionalViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ProfesionalMainActivity : AppCompatActivity() {
-
-    private val viewModel: ProfesionalViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profesional_main)
 
-        val sessionManager = SessionManager(this)
-        val tvBienvenida = findViewById<TextView>(R.id.tvBienvenidaProfesional)
-        val btnCerrarSesion = findViewById<Button>(R.id.btnCerrarSesionProfesional)
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation_prof)
 
-        tvBienvenida.text = "Hola, ${sessionManager.getNombre()}\n(Profesional)"
-
-        btnCerrarSesion.setOnClickListener {
-            sessionManager.cerrarSesion()
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+        if (savedInstanceState == null) {
+            cargarFragmento(InicioProfesionalFragment())
+            bottomNav.selectedItemId = R.id.nav_inicio_prof
         }
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_inicio_prof -> {
+                    cargarFragmento(InicioProfesionalFragment())
+                    true
+                }
+                R.id.nav_agenda_prof -> {
+                    cargarFragmento(AgendaProfesionalFragment())
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    private fun cargarFragmento(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container_prof, fragment)
+            .commit()
     }
 }

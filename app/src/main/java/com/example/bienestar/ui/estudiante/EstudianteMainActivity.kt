@@ -1,34 +1,47 @@
 package com.example.bienestar.ui.estudiante
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.bienestar.R
-import com.example.bienestar.ui.autenticacion.LoginActivity
-import com.example.bienestar.utils.SessionManager
-import com.example.bienestar.viewmodel.EstudianteViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class EstudianteMainActivity : AppCompatActivity() {
-
-    private val viewModel: EstudianteViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_estudiante_main)
 
-        val sessionManager = SessionManager(this)
-        val tvBienvenida = findViewById<TextView>(R.id.tvBienvenidaEstudiante)
-        val btnCerrarSesion = findViewById<Button>(R.id.btnCerrarSesionEstudiante)
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-        tvBienvenida.text = "Hola, ${sessionManager.getNombre()}\n(Estudiante)"
-
-        btnCerrarSesion.setOnClickListener {
-            sessionManager.cerrarSesion()
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+        // Que al iniciar la app cargue el Inicio por defecto
+        if (savedInstanceState == null) {
+            cargarFragmento(InicioEstudianteFragment())
+            bottomNav.selectedItemId = R.id.nav_inicio // Marca el ícono de inicio como seleccionado
         }
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_inicio -> {
+                    cargarFragmento(InicioEstudianteFragment())
+                    true
+                }
+                R.id.nav_citas -> {
+                    cargarFragmento(MisCitasFragment())
+                    true
+                }
+                R.id.nav_apoyo -> {
+                    cargarFragmento(PedirApoyoFragment())
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    private fun cargarFragmento(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }
