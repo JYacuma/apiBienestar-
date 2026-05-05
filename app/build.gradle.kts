@@ -63,6 +63,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     // --------------------------------------------------------
     // 4. LIBRERÍAS DE COMPOSE (Las que Android Studio puso por defecto)
@@ -74,6 +75,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
 
+
     // --------------------------------------------------------
     // 5. TESTING
     // --------------------------------------------------------
@@ -84,4 +86,5 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
 }

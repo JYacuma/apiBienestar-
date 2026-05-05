@@ -4,5 +4,7 @@ data class Usuario(
     val id: Long,
     val nombre: String,
     val correo: String,
-    val rol: Rol
+    val contrasena: String?,
+    val rol: Rol,
+    val programa: String?
 )

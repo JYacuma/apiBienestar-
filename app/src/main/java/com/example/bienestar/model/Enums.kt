@@ -1,12 +1,12 @@
 package com.example.bienestar.model
 
+
+
 enum class Rol {
     ESTUDIANTE,
     PROFESIONAL,
     ADMINISTRADOR
 }
-
-
 
 enum class EstadoCita {
     PENDIENTE,

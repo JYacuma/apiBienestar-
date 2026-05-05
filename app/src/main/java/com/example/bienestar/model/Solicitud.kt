@@ -5,6 +5,6 @@ data class Solicitud(
     val estudianteId: Long,
     val tipo: TipoSolicitud,
     val estado: EstadoSolicitud,
-    val descripcion: String,
-    val fechaCreacion: String
+    val fecha: String,
+    val descripcion: String
 )
