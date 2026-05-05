@@ -2,10 +2,7 @@ package com.example.bienestar.ui.autenticacion
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bienestar.R
@@ -13,58 +10,46 @@ import com.example.bienestar.model.Rol
 import com.example.bienestar.ui.admin.AdminMainActivity
 import com.example.bienestar.ui.estudiante.EstudianteMainActivity
 import com.example.bienestar.ui.profesional.ProfesionalMainActivity
-import com.example.bienestar.utils.SessionManager
 import com.example.bienestar.viewmodel.AutenticacionViewModel
 
 class LoginActivity : AppCompatActivity() {
-
     private val viewModel: AutenticacionViewModel by viewModels()
-    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        sessionManager = SessionManager(this)
 
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val etCorreo = findViewById<EditText>(R.id.etCorreo)
         val etContra = findViewById<EditText>(R.id.etContrasena)
         val tvIrRegistro = findViewById<TextView>(R.id.tvIrRegistro)
 
-
+        // Escuchar respuesta del servidor
         viewModel.authResult.observe(this) { result ->
             result.onSuccess { usuario ->
-                // Guardamos los datos en la memoria del celular para no pedir login otra vez
-                sessionManager.guardarSesion(usuario.id, usuario.nombre, usuario.rol.name)
+                Toast.makeText(this, "¡Bienvenido ${usuario.nombre}!", Toast.LENGTH_SHORT).show()
 
-                Toast.makeText(this, "Bienvenido ${usuario.nombre}", Toast.LENGTH_SHORT).show()
-
-                // Así está en tu código. Decide la pantalla leyendo la respuesta del servidor:
+                // Redirección por ROL
                 val intent = when (usuario.rol) {
+                    Rol.ADMINISTRADOR -> Intent(this, AdminMainActivity::class.java)
                     Rol.ESTUDIANTE -> Intent(this, EstudianteMainActivity::class.java)
                     Rol.PROFESIONAL -> Intent(this, ProfesionalMainActivity::class.java)
-                    Rol.ADMINISTRADOR -> Intent(this, AdminMainActivity::class.java)
                 }
-
-
                 startActivity(intent)
-                finish() // Cerramos el login para que no puedan volver atrás con el botón del cel
+                finish()
             }.onFailure { error ->
+                // Esto te avisará si es 404, 401 o falta internet
                 Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_LONG).show()
             }
         }
 
-
         btnLogin.setOnClickListener {
             val correo = etCorreo.text.toString().trim()
             val contra = etContra.text.toString().trim()
-
             if (correo.isNotEmpty() && contra.isNotEmpty()) {
-                // Llamamos al ViewModel para que hable con Render
                 viewModel.login(correo, contra)
             } else {
-                Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Escribe correo y contraseña", Toast.LENGTH_SHORT).show()
             }
         }
 

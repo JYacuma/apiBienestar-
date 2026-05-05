@@ -18,7 +18,8 @@ class AutenticacionViewModel : ViewModel() {
         // Ejecutamos en una corrutina para no bloquear la interfaz de usuario
         viewModelScope.launch {
             try {
-                // Preparamos el Map tal cual lo definiste en tu ApiService
+                // AQUÍ ESTÁ LA CORRECCIÓN:
+                // Las claves ahora están en español para que Spring Boot las reconozca.
                 val credenciales = mapOf(
                     "correo" to correo,
                     "contrasena" to contrasena
@@ -31,11 +32,11 @@ class AutenticacionViewModel : ViewModel() {
                     // ¡ÉXITO! Pasamos el objeto Usuario completo
                     _authResult.value = Result.success(respuesta.body()!!)
                 } else {
-                    // El servidor respondió con error (ej: 401 o 404)
+                    // El servidor respondió con error (ej: 400, 401 o 404)
                     _authResult.value = Result.failure(Exception("Correo o contraseña incorrectos"))
                 }
             } catch (e: Exception) {
-                // Error de red (sin internet, servidor caído, etc.)
+                // Error de red (sin internet, servidor caído, timeout, etc.)
                 _authResult.value = Result.failure(Exception("Error de conexión: Verifica tu internet"))
             }
         }

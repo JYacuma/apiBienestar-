@@ -13,7 +13,8 @@ import retrofit2.http.Path
 interface ApiService {
 
 
-    @POST("api/usuarios/login")
+    // Cambiamos a "auth" y nos aseguramos de la ruta
+    @POST("api/auth/login")
     suspend fun loginUsuario(@Body credenciales: Map<String, String>): Response<Usuario>
 
     @POST("api/usuarios/registro")
