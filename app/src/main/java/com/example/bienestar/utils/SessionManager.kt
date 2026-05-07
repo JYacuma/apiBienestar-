@@ -14,7 +14,9 @@ class SessionManager(context: Context) {
         editor.apply()
     }
 
-    fun getUsuarioId(): Long = prefs.getLong("usuarioId", -1L)
+    // Cambiado a obtenerIdUsuario para que los fragmentos dejen de estar en rojo
+    fun obtenerIdUsuario(): Long = prefs.getLong("usuarioId", -1L)
+
     fun getRol(): String? = prefs.getString("rol", null)
     fun getNombre(): String? = prefs.getString("nombre", null)
 

@@ -5,11 +5,16 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5">
 
-    <FrameLayout
-        android:id="@+id/fragment_container_prof"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerProf"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation_prof" />
+
+    <FrameLayout
+        android:id="@+id/detail_container_prof"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_prof"
@@ -20,4 +25,5 @@
         app:menu="@menu/menu_profesional"
         app:itemIconTint="#F57C00"
         app:itemTextColor="#F57C00" />
+
 </RelativeLayout>

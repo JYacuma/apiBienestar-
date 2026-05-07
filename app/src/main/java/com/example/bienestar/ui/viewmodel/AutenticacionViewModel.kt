@@ -10,33 +10,41 @@ import kotlinx.coroutines.launch
 
 class AutenticacionViewModel : ViewModel() {
 
-    // Este LiveData es el que la LoginActivity estará "escuchando"
     private val _authResult = MutableLiveData<Result<Usuario>>()
     val authResult: LiveData<Result<Usuario>> = _authResult
 
+    // Nuevo LiveData para observar el estado del registro
+    private val _registroResult = MutableLiveData<Result<Usuario>>()
+    val registroResult: LiveData<Result<Usuario>> = _registroResult
+
     fun login(correo: String, contrasena: String) {
-        // Ejecutamos en una corrutina para no bloquear la interfaz de usuario
         viewModelScope.launch {
             try {
-                // Preparamos el Map tal cual lo definiste en tu ApiService
-                val credenciales = mapOf(
-                    "correo" to correo,
-                    "contrasena" to contrasena
-                )
-
-                // Llamamos a tu función de loginUsuario
+                val credenciales = mapOf("correo" to correo, "contrasena" to contrasena)
                 val respuesta = RetrofitClient.apiService.loginUsuario(credenciales)
-
                 if (respuesta.isSuccessful && respuesta.body() != null) {
-                    // ¡ÉXITO! Pasamos el objeto Usuario completo
                     _authResult.value = Result.success(respuesta.body()!!)
                 } else {
-                    // El servidor respondió con error (ej: 401 o 404)
                     _authResult.value = Result.failure(Exception("Correo o contraseña incorrectos"))
                 }
             } catch (e: Exception) {
-                // Error de red (sin internet, servidor caído, etc.)
-                _authResult.value = Result.failure(Exception("Error de conexión: Verifica tu internet"))
+                _authResult.value = Result.failure(Exception("Error de conexión"))
+            }
+        }
+    }
+
+    // Función para registrar un nuevo usuario
+    fun registrar(usuario: Usuario) {
+        viewModelScope.launch {
+            try {
+                val respuesta = RetrofitClient.apiService.registrarUsuario(usuario)
+                if (respuesta.isSuccessful && respuesta.body() != null) {
+                    _registroResult.value = Result.success(respuesta.body()!!)
+                } else {
+                    _registroResult.value = Result.failure(Exception("No se pudo completar el registro"))
+                }
+            } catch (e: Exception) {
+                _registroResult.value = Result.failure(Exception("Error de red: ${e.message}"))
             }
         }
     }

@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5">
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation" />
@@ -18,7 +18,13 @@
         android:layout_alignParentBottom="true"
         android:background="#FFFFFF"
         app:menu="@menu/menu_estudiante"
-        app:itemIconTint="#1565C0"
-        app:itemTextColor="#1565C0" />
+        app:itemIconTint="@color/azul_principal"
+        app:itemTextColor="@color/azul_principal" />
+
+    <FrameLayout
+        android:id="@+id/detail_container_estudiante"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="10dp" />
 
 </RelativeLayout>

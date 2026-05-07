@@ -1,5 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Bienestar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/azul_principal</item>
+        <item name="colorPrimaryVariant">@color/azul_oscuro</item>
+        <item name="colorOnPrimary">@color/white</item>
 
-    <style name="Theme.Bienestar" parent="android:Theme.Material.Light.NoActionBar" />
+        <item name="textInputStyle">@style/Widget.Bienestar.TextInputLayout.OutlinedBox</item>
+    </style>
+
+    <style name="Widget.Bienestar.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/input_stroke_selector</item>
+
+        <item name="android:textColorHint">@color/gris_texto</item>
+        <item name="startIconTint">@color/gris_texto</item>
+        <item name="boxStrokeErrorColor">@color/rojo_error</item>
+    </style>
 </resources>

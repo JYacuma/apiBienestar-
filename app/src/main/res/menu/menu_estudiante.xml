@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:id="@+id/nav_inicio"
-        android:icon="@android:drawable/ic_menu_compass"
+        android:icon="@drawable/ic_home"
         android:title="Inicio" />
 
     <item
         android:id="@+id/nav_citas"
-        android:icon="@android:drawable/ic_menu_my_calendar"
-        android:title="Mis Citas" />
+        android:icon="@drawable/ic_calendar"
+        android:title="Citas" />
 
     <item
         android:id="@+id/nav_apoyo"
-        android:icon="@android:drawable/ic_menu_edit"
-        android:title="Pedir Apoyo" />
+        android:icon="@drawable/ic_help"
+        android:title="Apoyo" />
+
 </menu>

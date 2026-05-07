@@ -22,11 +22,10 @@ class UsuariosAdminFragment : Fragment() {
         val rvUsuarios = view.findViewById<RecyclerView>(R.id.rvUsuariosAdmin)
         rvUsuarios.layoutManager = LinearLayoutManager(requireContext())
 
-        // Datos simulados (Bypass del backend)
         val usuariosFalsos = listOf(
-            Usuario(1L, "Juan Pérez", "juan@ejemplo.com", "1234", Rol.ESTUDIANTE, "Ing. Sistemas"),
-            Usuario(2L, "Dra. Ana Gómez", "ana@ejemplo.com", "1234", Rol.PROFESIONAL, "Psicología"),
-            Usuario(3L, "Carlos López", "carlos@ejemplo.com", "1234", Rol.ESTUDIANTE, "Enfermería")
+            Usuario(1L, "Juan Pérez", "juan@ejemplo.com", "1234", Rol.ESTUDIANTE.name, "Ing. Sistemas"),
+            Usuario(2L, "Dra. Ana Gómez", "ana@ejemplo.com", "1234", Rol.PROFESIONAL.name, "Psicología"),
+            Usuario(3L, "Carlos López", "carlos@ejemplo.com", "1234", Rol.ESTUDIANTE.name, "Enfermería")
         )
 
         rvUsuarios.adapter = UsuarioAdapter(usuariosFalsos)

@@ -1,10 +1,9 @@
 package com.example.bienestar.model
 
 data class Solicitud(
-    val id: Long,
-    val estudianteId: Long,
-    val tipo: TipoSolicitud,
-    val estado: EstadoSolicitud,
-    val fecha: String,
-    val descripcion: String
+    val id: Long? = null,
+    val tipo: String? = null,
+    val descripcion: String? = null, // Clave para que el 400 no vuelva
+    val estado: String? = null,
+    val createdAt: String? = null
 )

@@ -1,53 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="32dp"
-    android:background="#FFFFFF">
+    android:background="#F8F9FA"
+    android:fillViewport="true">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Agendar Nueva Cita"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="#1565C0"
-        android:layout_marginBottom="24dp" />
+        android:orientation="vertical"
+        android:padding="32dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profesional:"
-        android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agendar Nueva Cita"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#1565C0"
+            android:layout_marginBottom="24dp" />
 
-    <Spinner
-        android:id="@+id/spinnerProfesionales"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:layout_marginBottom="16dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Especialidad requerida:"
+            android:textStyle="bold"
+            android:textColor="#444444"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fecha (YYYY-MM-DD):"
-        android:textStyle="bold"/>
+        <Spinner
+            android:id="@+id/spinnerEspecialidad"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/edittext_border"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp" />
 
-    <EditText
-        android:id="@+id/etFechaCita"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Ej: 2026-06-15"
-        android:layout_marginBottom="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profesional disponible:"
+            android:textStyle="bold"
+            android:textColor="#444444"/>
 
-    <Button
-        android:id="@+id/btnConfirmarCita"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Confirmar Cita"
-        android:backgroundTint="#2E7D32"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:layout_marginTop="24dp"/>
-</LinearLayout>
+        <Spinner
+            android:id="@+id/spinnerProfesionales"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/edittext_border"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha de la cita:"
+            android:textStyle="bold"
+            android:textColor="#444444"/>
+
+        <TextView
+            android:id="@+id/tvFechaSeleccionada"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Tocar para elegir fecha"
+            android:gravity="center_vertical"
+            android:paddingStart="12dp"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:background="@drawable/edittext_border"
+            android:drawableEnd="@android:drawable/ic_menu_today"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Horario disponible:"
+            android:textStyle="bold"
+            android:textColor="#444444"/>
+
+        <Spinner
+            android:id="@+id/spinnerHorarios"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/edittext_border"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Motivo de la cita:"
+            android:textStyle="bold"
+            android:textColor="#444444"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/etMotivoCita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ej: Me siento estresado por los parciales"
+            android:textColor="#212121"
+            android:textColorHint="#757575"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:gravity="top"
+            android:padding="12dp"
+            android:background="@drawable/edittext_border"
+            android:layout_marginBottom="32dp"/>
+
+        <Button
+            android:id="@+id/btnConfirmarCita"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Confirmar Cita"
+            android:backgroundTint="#2E7D32"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            android:elevation="4dp"/>
+
+    </LinearLayout>
+</ScrollView>

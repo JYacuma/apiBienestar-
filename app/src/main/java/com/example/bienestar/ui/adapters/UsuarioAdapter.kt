@@ -25,7 +25,7 @@ class UsuarioAdapter(private val usuarios: List<Usuario>) : RecyclerView.Adapter
         val usuario = usuarios[position]
         holder.tvNombre.text = usuario.nombre
         holder.tvCorreo.text = usuario.correo
-        holder.tvRol.text = usuario.rol.name
+        holder.tvRol.text = usuario.rol
     }
 
     override fun getItemCount() = usuarios.size

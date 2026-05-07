@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5">
 
-    <FrameLayout
-        android:id="@+id/fragment_container_admin"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerAdmin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation_admin" />
@@ -18,7 +18,7 @@
         android:layout_alignParentBottom="true"
         android:background="#FFFFFF"
         app:menu="@menu/menu_admin"
-        app:itemIconTint="#6A1B9A"
-        app:itemTextColor="#6A1B9A" />
+        app:itemIconTint="@color/azul_principal"
+        app:itemTextColor="@color/azul_principal" />
 
 </RelativeLayout>

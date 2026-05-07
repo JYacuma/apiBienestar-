@@ -1,9 +1,8 @@
 package com.example.bienestar.repository
 
-import com.example.bienestar.network.RetrofitClient
 import com.example.bienestar.model.Usuario
+import com.example.bienestar.network.RetrofitClient
 
 class UsuarioRepository {
-    private val api = RetrofitClient.apiService
-    suspend fun login(correo: String, contra: String) = api.loginUsuario(mapOf("correo" to correo, "contrasena" to contra))
+    suspend fun registrar(usuario: Usuario) = RetrofitClient.apiService.registrarUsuario(usuario)
 }

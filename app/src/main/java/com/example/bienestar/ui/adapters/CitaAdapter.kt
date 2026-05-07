@@ -1,5 +1,6 @@
 package com.example.bienestar.ui.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bienestar.R
 import com.example.bienestar.model.Cita
 
-// Le agregamos una variable opcional 'onCitaClick'
+// ... (mismos imports)
+
 class CitaAdapter(
-    private val citas: List<Cita>,
+    private var citas: List<Cita>,
+    private val esProfesional: Boolean = false,
     private val onCitaClick: ((Cita) -> Unit)? = null
 ) : RecyclerView.Adapter<CitaAdapter.CitaViewHolder>() {
 
@@ -27,15 +30,41 @@ class CitaAdapter(
 
     override fun onBindViewHolder(holder: CitaViewHolder, position: Int) {
         val cita = citas[position]
-        holder.tvFechaHora.text = "${cita.fecha} - ${cita.hora}"
-        holder.tvProfesional.text = "ID Vinculado: ${if (cita.estudianteId != 0L) cita.estudianteId else cita.profesionalId}"
-        holder.tvEstado.text = cita.estado.name
 
-        // ¡Magia! Si pasamos una acción de clic, la ejecutamos aquí
+        // 1. Fecha y Hora combinadas
+        val fecha = cita.fecha ?: "Sin fecha"
+        val hora = cita.horaInicio ?: "--:--"
+        holder.tvFechaHora.text = "$fecha | $hora"
+
+        // 2. Estado con colores (mismo flujo)
+        val estadoActual = cita.estado ?: "PENDIENTE"
+        holder.tvEstado.text = estadoActual.uppercase()
+
+        when (estadoActual.uppercase()) {
+            "PENDIENTE" -> holder.tvEstado.setTextColor(Color.parseColor("#F57C00"))
+            "CONFIRMADA" -> holder.tvEstado.setTextColor(Color.parseColor("#2E7D32"))
+            "CANCELADA" -> holder.tvEstado.setTextColor(Color.RED)
+            else -> holder.tvEstado.setTextColor(Color.GRAY)
+        }
+
+        // 3. CORREGIDO: Mostrar Especialidad - Nombre Profesional
+        if (esProfesional) {
+            holder.tvProfesional.text = "Estudiante: ${cita.nombreEstudiante ?: "N/A"}"
+        } else {
+            val especialidad = cita.especialidad ?: "Bienestar"
+            val nombreProf = cita.nombreProfesional ?: "Por asignar"
+            holder.tvProfesional.text = "$especialidad - $nombreProf"
+        }
+
         holder.itemView.setOnClickListener {
             onCitaClick?.invoke(cita)
         }
     }
 
     override fun getItemCount() = citas.size
+
+    fun updateList(nuevaLista: List<Cita>) {
+        this.citas = nuevaLista
+        notifyDataSetChanged()
+    }
 }

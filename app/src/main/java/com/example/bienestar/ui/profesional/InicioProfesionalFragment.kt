@@ -2,9 +2,7 @@ package com.example.bienestar.ui.profesional
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -12,19 +10,34 @@ import com.example.bienestar.R
 import com.example.bienestar.ui.autenticacion.LoginActivity
 import com.example.bienestar.utils.SessionManager
 
-class InicioProfesionalFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Reutilizamos el diseño del estudiante para ahorrar tiempo, solo cambiamos el texto
-        val view = inflater.inflate(R.layout.fragment_inicio_estudiante, container, false)
+class InicioProfesionalFragment : Fragment(R.layout.fragment_inicio_profesional) {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val sessionManager = SessionManager(requireContext())
+        val tvBienvenida = view.findViewById<TextView>(R.id.tvBienvenidaProf)
+        val tvDetallesCita = view.findViewById<TextView>(R.id.tvDetallesCitaProf)
+        val btnCerrarSesion = view.findViewById<Button>(R.id.btnCerrarSesionProf)
 
-        view.findViewById<TextView>(R.id.tvBienvenidaInicio).text = "¡Hola, ${sessionManager.getNombre()}!\nPanel de Profesional"
+        // Nombre real desde la sesión
+        val nombre = sessionManager.getNombre() ?: "Profesional"
+        tvBienvenida.text = "¡Hola, $nombre!"
 
-        view.findViewById<Button>(R.id.btnCerrarSesion).setOnClickListener {
+        // Simulamos la carga del siguiente estudiante a atender
+        val hayAtenciones = true
+        if (hayAtenciones) {
+            tvDetallesCita.text = "📅 Hoy a las: 08:00 AM\n👤 Estudiante ID: 201\n📋 Motivo: Sesión de apoyo emocional"
+        } else {
+            tvDetallesCita.text = "Tu agenda está libre en este momento. ¡Buen trabajo!"
+        }
+
+        btnCerrarSesion.setOnClickListener {
             sessionManager.cerrarSesion()
-            startActivity(Intent(requireActivity(), LoginActivity::class.java))
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
             requireActivity().finish()
         }
-        return view
     }
 }

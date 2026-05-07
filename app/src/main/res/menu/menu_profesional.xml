@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_inicio_prof"
-        android:icon="@android:drawable/ic_menu_compass"
+        android:icon="@drawable/ic_dashboard"
         android:title="Inicio" />
 
     <item
         android:id="@+id/nav_agenda_prof"
-        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:icon="@drawable/ic_calendar"
         android:title="Mi Agenda" />
 </menu>

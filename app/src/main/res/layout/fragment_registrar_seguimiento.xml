@@ -1,53 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="32dp"
-    android:background="#FFF3E0">
+    android:background="#F8F9FA"
+    android:fillViewport="true">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Registrar Seguimiento"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="#E65100"
-        android:layout_marginBottom="16dp" />
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <TextView
-        android:id="@+id/tvInfoCita"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Completa el reporte de la sesión con el estudiante."
-        android:textSize="16sp"
-        android:layout_marginBottom="24dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registro de Evolución"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#E65100"
+            android:layout_marginBottom="8dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Observaciones:"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="#FFE0B2"
+            android:layout_marginBottom="24dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:background="#FFF8E1">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_dialog_info"
+                    app:tint="#FB8C00"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Por favor, completa todos los campos para el historial clínico."
+                    android:textColor="#BF360C"
+                    android:textSize="13sp"
+                    android:layout_marginStart="8dp"
+                    android:textStyle="italic"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-    <EditText
-        android:id="@+id/etObservaciones"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@android:drawable/editbox_background"
-        android:gravity="top|start"
-        android:hint="Escribe aquí los avances, acuerdos y detalles de la sesión..."
-        android:inputType="textMultiLine"
-        android:padding="12dp"
-        android:layout_marginBottom="32dp"/>
+        <TextView
+            android:id="@+id/tvInfoPaciente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cargando paciente..."
+            android:textColor="#212121"
+            android:textStyle="bold"
+            android:background="@drawable/edittext_border"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp" />
 
-    <Button
-        android:id="@+id/btnGuardarSeguimiento"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Guardar Reporte"
-        android:backgroundTint="#E65100"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
-</LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="1. Número de Historia Clínica"
+            app:placeholderText="Ej: 1002345678"
+            app:boxStrokeColor="#E65100"
+            app:boxStrokeWidth="2dp"
+            app:startIconDrawable="@android:drawable/ic_menu_edit"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etHistoriaClinica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="#212121"
+                android:textColorHint="#757575" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="2. Diagnóstico / Observaciones"
+            app:placeholderText="Describe los síntomas..."
+            app:boxStrokeColor="#E65100"
+            app:boxStrokeWidth="2dp"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDiagnostico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="4"
+                android:gravity="top"
+                android:textColor="#212121"
+                android:textColorHint="#757575" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="3. Plan de Tratamiento"
+            app:placeholderText="Indica los pasos a seguir..."
+            app:boxStrokeColor="#E65100"
+            app:boxStrokeWidth="2dp"
+            android:layout_marginBottom="32dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTratamiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="4"
+                android:gravity="top"
+                android:textColor="#212121"
+                android:textColorHint="#757575" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGuardarSeguimiento"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="GUARDAR EN HISTORIA CLÍNICA"
+            android:backgroundTint="#E65100"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            app:elevation="4dp"/>
+
+    </LinearLayout>
+</ScrollView>

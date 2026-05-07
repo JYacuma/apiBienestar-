@@ -2,8 +2,9 @@ package com.example.bienestar.ui.profesional
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.example.bienestar.R
+import com.example.bienestar.ui.adapters.ProfesionalViewPagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ProfesionalMainActivity : AppCompatActivity() {
@@ -12,31 +13,37 @@ class ProfesionalMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profesional_main)
 
+        val viewPager = findViewById<ViewPager2>(R.id.viewPagerProf)
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation_prof)
 
-        if (savedInstanceState == null) {
-            cargarFragmento(InicioProfesionalFragment())
-            bottomNav.selectedItemId = R.id.nav_inicio_prof
-        }
+        // 1. Configuramos el adaptador especializado para el Profesional
+        val adapter = ProfesionalViewPagerAdapter(this)
+        viewPager.adapter = adapter
 
+        // 2. Sincronizar: Deslizar pantalla -> Cambiar icono abajo
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                bottomNav.menu.getItem(position).isChecked = true
+            }
+        })
+
+        // 3. Sincronizar: Tocar icono abajo -> Mover pantalla
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_inicio_prof -> {
-                    cargarFragmento(InicioProfesionalFragment())
+                    viewPager.currentItem = 0
                     true
                 }
                 R.id.nav_agenda_prof -> {
-                    cargarFragmento(AgendaProfesionalFragment())
+                    viewPager.currentItem = 1
                     true
                 }
                 else -> false
             }
         }
-    }
 
-    private fun cargarFragmento(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container_prof, fragment)
-            .commit()
+        // Mantenemos 2 páginas en memoria para que el cambio sea instantáneo
+        viewPager.offscreenPageLimit = 1
     }
 }
