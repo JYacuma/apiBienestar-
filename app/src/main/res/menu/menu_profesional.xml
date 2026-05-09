@@ -2,11 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_inicio_prof"
-        android:icon="@drawable/ic_dashboard"
+        android:icon="@drawable/ic_home"
         android:title="Inicio" />
-
     <item
         android:id="@+id/nav_agenda_prof"
-        android:icon="@drawable/ic_calendar"
-        android:title="Mi Agenda" />
+        android:icon="@drawable/ic_agenda"
+        android:title="Agenda" />
+
+    <item
+        android:id="@+id/nav_horarios_prof"
+        android:icon="@drawable/ic_clock"
+        android:title="Horarios" />
 </menu>

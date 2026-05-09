@@ -16,11 +16,9 @@ class ProfesionalMainActivity : AppCompatActivity() {
         val viewPager = findViewById<ViewPager2>(R.id.viewPagerProf)
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation_prof)
 
-        // 1. Configuramos el adaptador especializado para el Profesional
         val adapter = ProfesionalViewPagerAdapter(this)
         viewPager.adapter = adapter
 
-        // 2. Sincronizar: Deslizar pantalla -> Cambiar icono abajo
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -28,7 +26,6 @@ class ProfesionalMainActivity : AppCompatActivity() {
             }
         })
 
-        // 3. Sincronizar: Tocar icono abajo -> Mover pantalla
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_inicio_prof -> {
@@ -39,11 +36,15 @@ class ProfesionalMainActivity : AppCompatActivity() {
                     viewPager.currentItem = 1
                     true
                 }
+                // 🎯 NUEVO: Navegación a horarios
+                R.id.nav_horarios_prof -> {
+                    viewPager.currentItem = 2
+                    true
+                }
                 else -> false
             }
         }
 
-        // Mantenemos 2 páginas en memoria para que el cambio sea instantáneo
-        viewPager.offscreenPageLimit = 1
+        viewPager.offscreenPageLimit = 2 // Subimos a 2 para mantener las 3 páginas listas
     }
 }

@@ -1,56 +1,47 @@
 package com.example.bienestar.network
 
-import com.example.bienestar.model.Cita
-import com.example.bienestar.model.Horario
-import com.example.bienestar.model.Profesional
-import com.example.bienestar.model.Seguimiento
-import com.example.bienestar.model.Solicitud
-import com.example.bienestar.model.Usuario
+import com.example.bienestar.model.*
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiService {
 
-    // ─── AUTENTICACIÓN (UsuarioController) ───────────────────────────
-
+    // ─── 1. AUTENTICACIÓN (UsuarioController) ──────────────────────
     @POST("api/auth/login")
     suspend fun loginUsuario(@Body credenciales: Map<String, String>): Response<Usuario>
 
-    @POST("api/auth/registro")
-    suspend fun registrarUsuario(@Body nuevoUsuario: Usuario): Response<Usuario>
+    // 🎯 NUEVO: Ruta para registrar Estudiante
+    @POST("api/auth/registro/estudiante")
+    suspend fun registrarEstudiante(@Body datos: Map<String, String>): Response<Usuario>
+
+    // 🎯 NUEVO: Ruta para registrar Profesional
+    @POST("api/auth/registro/profesional")
+    suspend fun registrarProfesional(@Body datos: Map<String, String>): Response<Usuario>
 
 
-    // ─── CITAS (CitaController) ──────────────────────────────────────
-
-    // CORREGIDO: Ruta exacta del controller, sin Path ID, y recibe el Map
-    @POST("api/citas")
+    // ─── 2. ESTUDIANTE (CitaController y SolicitudController) ──────
+    // Gestión de Citas Médicas/Psicológicas
+    @POST("api/citas/estudiante/{id}")
     suspend fun agendarCita(
+        @Path("id") id: Long,
         @Body cita: Map<String, @JvmSuppressWildcards Any>
     ): Response<Cita>
 
-    // CORREGIDO: Ruta para traer las citas del estudiante (ID 1 fijo en el backend)
-    @GET("api/citas/estudiante")
-    suspend fun getMisCitas(): Response<List<Cita>>
+    @GET("api/citas/estudiante/{id}")
+    suspend fun getMisCitas(@Path("id") id: Long): Response<List<Cita>>
 
-
-    // ─── ESTUDIANTE (EstudianteController) ───────────────────────────
-
-    @POST("api/estudiante/{id}/solicitudes")
-    suspend fun pedirApoyo(
+    // Gestión de Solicitudes de Apoyo (Académico, Financiero, etc.)
+    @POST("api/solicitudes/estudiante/{id}")
+    suspend fun crearSolicitud(
         @Path("id") id: Long,
-        @Body nuevaSolicitud: Map<String, @JvmSuppressWildcards Any> // Cambiado a Map
+        @Body nuevaSolicitud: Map<String, @JvmSuppressWildcards Any>
     ): Response<Solicitud>
 
-    @GET("api/estudiante/{id}/solicitudes")
+    @GET("api/solicitudes/estudiante/{id}")
     suspend fun getMisSolicitudes(@Path("id") id: Long): Response<List<Solicitud>>
 
 
-    // ─── PROFESIONAL (ProfesionalController / SeguimientoController) ───
-
+    // ─── 3. PROFESIONAL (ProfesionalController y Seguimiento) ──────
     @GET("api/profesional/{id}/citas")
     suspend fun getCitasProfesional(@Path("id") id: Long): Response<List<Cita>>
 
@@ -63,21 +54,39 @@ interface ApiService {
     @GET("api/profesional/{id}/horarios")
     suspend fun getHorariosProfesional(@Path("id") id: Long): Response<List<Horario>>
 
-    // CORRECCIÓN: Ruta exacta de Spring Boot y uso de Map para evitar el Error 400
     @POST("api/seguimientos")
-    suspend fun registrarSeguimiento(
-        @Body nuevoSeguimiento: Map<String, @JvmSuppressWildcards Any>
-    ): Response<Any> // Response<Any> porque el servidor devuelve el DTO.Response y no necesitamos mapear todo de vuelta en la app
+    suspend fun registrarSeguimiento(@Body nuevoSeguimiento: Map<String, @JvmSuppressWildcards Any>): Response<Any>
 
 
-    // ─── ADMINISTRADOR (AdminController) ─────────────────────────────
+    // ─── 4. ADMINISTRADOR (AdminController) ────────────────────────
+    @GET("api/admin/usuarios")
+    suspend fun getTodosLosUsuarios(): Response<List<Usuario>>
 
     @GET("api/admin/profesionales")
-    suspend fun getProfesionales(): Response<List<Profesional>>
+    suspend fun getTodosLosProfesionales(): Response<List<Profesional>>
 
     @GET("api/admin/citas")
     suspend fun getTodasLasCitas(): Response<List<Cita>>
 
     @GET("api/admin/solicitudes")
     suspend fun getTodasLasSolicitudes(): Response<List<Solicitud>>
+
+    // Gestión de Horarios por el Admin
+    @POST("api/admin/horarios")
+    suspend fun crearHorario(@Body nuevoHorario: Map<String, @JvmSuppressWildcards Any>): Response<Horario>
+
+    @DELETE("api/admin/horarios/{id}")
+    suspend fun eliminarHorario(@Path("id") id: Long): Response<Void>
+
+    @GET("api/admin/horarios/profesional/{profesionalId}")
+    suspend fun getHorariosPorProfesional(@Path("profesionalId") profesionalId: Long): Response<List<Horario>>
+
+
+    // ─── 5. GESTIÓN DE SOLICITUDES (NUEVO) ─────────────────────────
+    // Para que el profesional o admin cambie el estado de una solicitud de apoyo
+    @PUT("api/solicitudes/{id}/estado")
+    suspend fun actualizarEstadoSolicitud(
+        @Path("id") id: Long,
+        @Body estadoBody: Map<String, String>
+    ): Response<Solicitud>
 }

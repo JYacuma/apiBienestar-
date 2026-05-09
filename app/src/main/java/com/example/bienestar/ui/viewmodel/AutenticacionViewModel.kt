@@ -13,7 +13,6 @@ class AutenticacionViewModel : ViewModel() {
     private val _authResult = MutableLiveData<Result<Usuario>>()
     val authResult: LiveData<Result<Usuario>> = _authResult
 
-    // Nuevo LiveData para observar el estado del registro
     private val _registroResult = MutableLiveData<Result<Usuario>>()
     val registroResult: LiveData<Result<Usuario>> = _registroResult
 
@@ -33,15 +32,31 @@ class AutenticacionViewModel : ViewModel() {
         }
     }
 
-    // Función para registrar un nuevo usuario
-    fun registrar(usuario: Usuario) {
+    // 🎯 FUNCIÓN NUEVA PARA ESTUDIANTES
+    fun registrarEstudiante(datos: Map<String, String>) {
         viewModelScope.launch {
             try {
-                val respuesta = RetrofitClient.apiService.registrarUsuario(usuario)
+                val respuesta = RetrofitClient.apiService.registrarEstudiante(datos)
                 if (respuesta.isSuccessful && respuesta.body() != null) {
                     _registroResult.value = Result.success(respuesta.body()!!)
                 } else {
-                    _registroResult.value = Result.failure(Exception("No se pudo completar el registro"))
+                    _registroResult.value = Result.failure(Exception("Error al registrar estudiante"))
+                }
+            } catch (e: Exception) {
+                _registroResult.value = Result.failure(Exception("Error de red: ${e.message}"))
+            }
+        }
+    }
+
+    // 🎯 FUNCIÓN NUEVA PARA PROFESIONALES
+    fun registrarProfesional(datos: Map<String, String>) {
+        viewModelScope.launch {
+            try {
+                val respuesta = RetrofitClient.apiService.registrarProfesional(datos)
+                if (respuesta.isSuccessful && respuesta.body() != null) {
+                    _registroResult.value = Result.success(respuesta.body()!!)
+                } else {
+                    _registroResult.value = Result.failure(Exception("Error al registrar profesional"))
                 }
             } catch (e: Exception) {
                 _registroResult.value = Result.failure(Exception("Error de red: ${e.message}"))

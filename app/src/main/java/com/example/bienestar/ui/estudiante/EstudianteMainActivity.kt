@@ -1,19 +1,32 @@
 package com.example.bienestar.ui.estudiante
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.bienestar.R
 import com.example.bienestar.ui.adapters.MainViewPagerAdapter
+import com.example.bienestar.utils.SessionManager // 🎯 Importación necesaria
+import com.example.bienestar.viewmodel.EstudianteViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-// ... (tus imports iguales)
-
 class EstudianteMainActivity : AppCompatActivity() {
+
+    private val viewModel: EstudianteViewModel by viewModels()
+    private lateinit var sessionManager: SessionManager // 🎯 Declaración
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_estudiante_main)
+
+        // 🎯 Inicializar SessionManager
+        sessionManager = SessionManager(this)
+
+        // 🎯 CARGAR DATOS DEL ESTUDIANTE LOGUEADO AL ENTRAR
+        val idUsuario = sessionManager.obtenerIdUsuario()
+        if (idUsuario != -1L) {
+            viewModel.cargarDatos(idUsuario)
+        }
 
         val viewPager = findViewById<ViewPager2>(R.id.viewPager)
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
@@ -25,8 +38,6 @@ class EstudianteMainActivity : AppCompatActivity() {
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-
-                // El paracaídas: Solo intenta marcar si el índice existe en el menú
                 if (position < bottomNav.menu.size()) {
                     bottomNav.menu.getItem(position).isChecked = true
                 }
@@ -52,7 +63,6 @@ class EstudianteMainActivity : AppCompatActivity() {
             }
         }
 
-        // Importante: Si solo tienes 3 secciones, el límite debe ser 2
         viewPager.offscreenPageLimit = 2
     }
 }

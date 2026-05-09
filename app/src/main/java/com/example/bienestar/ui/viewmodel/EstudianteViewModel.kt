@@ -27,8 +27,7 @@ class EstudianteViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val resSol = repository.getSolicitudes(estudianteId)
-                // Aquí el repo ya sabe que no necesita el ID para las citas,
-                // pero se lo pasamos por la firma de la función.
+                // 🎯 Ahora el repo usará el ID dinámico para las citas
                 val resCita = repository.getCitas(estudianteId)
 
                 if (resSol.isSuccessful) solicitudes.postValue(resSol.body())
@@ -39,17 +38,17 @@ class EstudianteViewModel : ViewModel() {
         }
     }
 
-    // CORREGIDO: Ahora recibe el Mapa que armamos en el Fragment
-    fun agendarCita(citaData: Map<String, Any>) {
+    // 🎯 Agregamos estudianteId como parámetro para que no sea fijo
+    fun agendarCita(estudianteId: Long, citaData: Map<String, Any>) {
         viewModelScope.launch {
             try {
-                // CORREGIDO: Llamada al repo con un solo parámetro
-                val respuesta = repository.agendarCita(citaData)
+                // 🎯 Llamamos al repo pasando el ID dinámico
+                val respuesta = repository.agendarCita(estudianteId, citaData)
 
                 if (respuesta.isSuccessful && respuesta.body() != null) {
                     _agendarResult.value = Result.success(respuesta.body()!!)
-                    // Recargamos con el ID fijo 1
-                    cargarDatos(1L)
+                    // 🎯 RECARGAMOS CON EL ID REAL, NO CON 1L
+                    cargarDatos(estudianteId)
                 } else {
                     _agendarResult.value = Result.failure(Exception("Error al guardar la cita"))
                 }
@@ -59,14 +58,13 @@ class EstudianteViewModel : ViewModel() {
         }
     }
 
-    // En EstudianteViewModel.kt
-    fun pedirApoyo(estudianteId: Long, solicitudData: Map<String, Any>) { // <--- CAMBIA ESTO
+    fun pedirApoyo(estudianteId: Long, solicitudData: Map<String, Any>) {
         viewModelScope.launch {
             try {
                 val respuesta = repository.pedirApoyo(estudianteId, solicitudData)
                 if (respuesta.isSuccessful && respuesta.body() != null) {
                     _solicitudResult.value = Result.success(respuesta.body()!!)
-                    cargarDatos(estudianteId) // Refresca la lista automáticamente
+                    cargarDatos(estudianteId)
                 } else {
                     val errorMsg = respuesta.errorBody()?.string() ?: "Error desconocido"
                     _solicitudResult.value = Result.failure(Exception("Error $errorMsg"))

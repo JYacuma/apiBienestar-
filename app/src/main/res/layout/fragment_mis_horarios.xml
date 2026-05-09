@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Configurar Disponibilidad"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#212121"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Establece tus turnos para que los estudiantes puedan agendar citas."
+            android:textSize="14sp"
+            android:textColor="#757575"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Día de la semana"
+            android:textStyle="bold"
+            android:textColor="#424242"
+            android:layout_marginBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/spinnerDia"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@drawable/custom_input_border"
+            android:layout_marginBottom="20dp"
+            android:padding="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hora de Inicio (HH:mm:ss)"
+            android:textStyle="bold"
+            android:textColor="#424242"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etHoraInicio"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@drawable/custom_input_border"
+            android:hint="Ej: 08:00:00"
+            android:inputType="time"
+            android:padding="12dp"
+            android:textColor="#212121"
+            android:textColorHint="#BDBDBD"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hora de Finalización (HH:mm:ss)"
+            android:textStyle="bold"
+            android:textColor="#424242"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etHoraFin"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@drawable/custom_input_border"
+            android:hint="Ej: 12:00:00"
+            android:inputType="time"
+            android:padding="12dp"
+            android:textColor="#212121"
+            android:textColorHint="#BDBDBD"
+            android:layout_marginBottom="32dp" />
+
+        <Button
+            android:id="@+id/btnGuardarHorario"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="GUARDAR HORARIO"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#F57C00"
+            android:elevation="4dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -21,57 +21,41 @@ class RegistrarSeguimientoFragment : Fragment(R.layout.fragment_registrar_seguim
         val sessionManager = SessionManager(requireContext())
         val idProfesional = sessionManager.obtenerIdUsuario()
 
-        val tvInfoPaciente = view.findViewById<TextView>(R.id.tvInfoPaciente)
-        val etHistoria = view.findViewById<TextInputEditText>(R.id.etHistoriaClinica)
-        val etDiagnostico = view.findViewById<TextInputEditText>(R.id.etDiagnostico)
-        val etTratamiento = view.findViewById<TextInputEditText>(R.id.etTratamiento)
-        val btnGuardar = view.findViewById<Button>(R.id.btnGuardarSeguimiento)
-
-        // --- CORRECCIÓN: NOMBRE E ID FORZADO A 1 ---
-        val estudianteId = 1L // ID forzado como pediste
+        // 🎯 RECUPERAMOS EL ID REAL DE LA CITA SELECCIONADA
         val solicitudId = arguments?.getLong("CITA_ID") ?: -1L
-        // Atrapamos el nombre que mandó el Adapter (o ponemos uno por defecto si falla)
-        val nombrePaciente = arguments?.getString("NOMBRE_PACIENTE") ?: "Juan Perez"
+        val nombrePaciente = arguments?.getString("NOMBRE_PACIENTE") ?: "Paciente"
 
-        // Actualizamos la UI para que se vea elegante
-        tvInfoPaciente.text = "Paciente: $nombrePaciente (ID: $estudianteId)"
+        val tvInfo = view.findViewById<TextView>(R.id.tvInfoPaciente)
+        tvInfo.text = "Paciente: $nombrePaciente"
 
-        btnGuardar.setOnClickListener {
-            val h = etHistoria.text.toString().trim()
-            val d = etDiagnostico.text.toString().trim()
-            val t = etTratamiento.text.toString().trim()
+        val etH = view.findViewById<TextInputEditText>(R.id.etHistoriaClinica)
+        val etD = view.findViewById<TextInputEditText>(R.id.etDiagnostico)
+        val etT = view.findViewById<TextInputEditText>(R.id.etTratamiento)
+        val btn = view.findViewById<Button>(R.id.btnGuardarSeguimiento)
 
-            if (h.isEmpty() || d.isEmpty() || t.isEmpty()) {
-                Toast.makeText(requireContext(), "⚠️ Completa los 3 campos de información", Toast.LENGTH_SHORT).show()
+        btn.setOnClickListener {
+            val nota = "HISTORIA: ${etH.text}\nDIAGNOSTICO: ${etD.text}\nTRATAMIENTO: ${etT.text}"
+
+            if (solicitudId == -1L) {
+                Toast.makeText(requireContext(), "❌ Error: ID de cita no válido", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val notaUnificada = """
-                HISTORIA CLÍNICA: $h
-                DIAGNÓSTICO: $d
-                PLAN DE ACCIÓN: $t
-            """.trimIndent()
-
-            val bodySeguimiento = hashMapOf<String, Any>(
+            val body = hashMapOf<String, Any>(
                 "solicitudId" to solicitudId,
                 "profesionalId" to idProfesional,
-                "nota" to notaUnificada
+                "nota" to nota
             )
 
             lifecycleScope.launch {
                 try {
-                    val response = ApiClient.apiService.registrarSeguimiento(bodySeguimiento)
-
-                    if (response.isSuccessful) {
+                    val resp = ApiClient.apiService.registrarSeguimiento(body)
+                    if (resp.isSuccessful) {
                         Toast.makeText(requireContext(), "✅ Evolución guardada", Toast.LENGTH_LONG).show()
                         parentFragmentManager.popBackStack()
-                    } else {
-                        val errorMsg = response.errorBody()?.string() ?: "Error desconocido"
-                        android.util.Log.e("SEGUIMIENTO_ERROR", "Error ${response.code()}: $errorMsg")
-                        Toast.makeText(requireContext(), "❌ Error al guardar: ${response.code()}", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {
-                    Toast.makeText(requireContext(), "⚠️ Error de red", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "⚠️ Fallo de red", Toast.LENGTH_SHORT).show()
                 }
             }
         }
