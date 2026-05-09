@@ -1,18 +1,23 @@
 package com.example.bienestar.repository
 
-import com.example.bienestar.network.RetrofitClient
+import com.example.bienestar.network.RetrofitClient // O ApiClient, el que uses para llamar a la API
+import com.example.bienestar.model.Cita
+import com.example.bienestar.model.Solicitud
+import retrofit2.Response
 
 class EstudianteRepository {
 
-    // 🎯 Ahora usa el ID en la URL dinámica
-    suspend fun getCitas(id: Long) = RetrofitClient.apiService.getMisCitas(id)
+    // 📅 CITAS
+    suspend fun getCitas(id: Long): Response<List<Cita>> =
+        RetrofitClient.apiService.getMisCitas(id)
 
-    suspend fun getSolicitudes(id: Long) = RetrofitClient.apiService.getMisSolicitudes(id)
-
-    // 🎯 Recibe el ID para agendar
-    suspend fun agendarCita(id: Long, cita: Map<String, Any>) =
+    suspend fun agendarCita(id: Long, cita: Map<String, Any>): Response<Cita> =
         RetrofitClient.apiService.agendarCita(id, cita)
 
-    suspend fun pedirApoyo(id: Long, solicitud: Map<String, Any>) =
+    // 🆘 SOLICITUDES (APOYO)
+    suspend fun getSolicitudes(id: Long): Response<List<Solicitud>> =
+        RetrofitClient.apiService.getMisSolicitudes(id)
+
+    suspend fun pedirApoyo(id: Long, solicitud: Map<String, Any>): Response<Solicitud> =
         RetrofitClient.apiService.crearSolicitud(id, solicitud)
 }
