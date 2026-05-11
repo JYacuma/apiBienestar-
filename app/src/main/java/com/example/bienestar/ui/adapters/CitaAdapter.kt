@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bienestar.R
 import com.example.bienestar.model.Cita
 
-// ... (mismos imports)
-
 class CitaAdapter(
     private var citas: List<Cita>,
     private val esProfesional: Boolean = false,
@@ -20,6 +18,8 @@ class CitaAdapter(
     class CitaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvFechaHora: TextView = view.findViewById(R.id.tvFechaHora)
         val tvProfesional: TextView = view.findViewById(R.id.tvProfesional)
+        // 🎯 NUEVO: Referencia al TextView del motivo
+        val tvMotivo: TextView = view.findViewById(R.id.tvMotivo)
         val tvEstado: TextView = view.findViewById(R.id.tvEstado)
     }
 
@@ -36,7 +36,7 @@ class CitaAdapter(
         val hora = cita.horaInicio ?: "--:--"
         holder.tvFechaHora.text = "$fecha | $hora"
 
-        // 2. Estado con colores (mismo flujo)
+        // 2. Estado con colores
         val estadoActual = cita.estado ?: "PENDIENTE"
         holder.tvEstado.text = estadoActual.uppercase()
 
@@ -47,7 +47,7 @@ class CitaAdapter(
             else -> holder.tvEstado.setTextColor(Color.GRAY)
         }
 
-        // 3. CORREGIDO: Mostrar Especialidad - Nombre Profesional
+        // 3. Mostrar Especialidad - Nombre Profesional o Estudiante
         if (esProfesional) {
             holder.tvProfesional.text = "Estudiante: ${cita.nombreEstudiante ?: "N/A"}"
         } else {
@@ -55,6 +55,10 @@ class CitaAdapter(
             val nombreProf = cita.nombreProfesional ?: "Por asignar"
             holder.tvProfesional.text = "$especialidad - $nombreProf"
         }
+
+        // 🎯 4. NUEVO: Asignar el motivo a la tarjeta
+        val motivo = cita.motivo ?: "Sin motivo especificado"
+        holder.tvMotivo.text = "Motivo: $motivo"
 
         holder.itemView.setOnClickListener {
             onCitaClick?.invoke(cita)

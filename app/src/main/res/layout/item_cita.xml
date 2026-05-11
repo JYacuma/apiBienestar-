@@ -22,7 +22,7 @@
             android:id="@+id/tvFechaHora"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2026-05-10 | Motivo: Cita inicial"
+            android:text="2026-05-10 | 08:00"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -31,16 +31,26 @@
             android:id="@+id/tvProfesional"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Prof: 101 | Est: 1"
+            android:text="Psicología - Dr. Carlos Pérez"
             android:textColor="#BDBDBD"
             android:textSize="13sp"
             android:layout_marginTop="4dp" />
 
         <TextView
+            android:id="@+id/tvMotivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Motivo: Estrés académico"
+            android:textColor="#BDBDBD"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:layout_marginTop="6dp" />
+
+        <TextView
             android:id="@+id/tvEstado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CONFIRMADA"
+            android:text="PENDIENTE"
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginTop="8dp" />
